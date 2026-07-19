@@ -1,0 +1,15 @@
+services:
+  postgres:
+    container_name: api-agendamentos
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DATABASE: ${POSTGRES_DATABASE}
+    ports:
+      - 5432:5432
+  redis:
+    image: redis
+    ports:
+      - '${REDIS_PORT:-6379}:6379'
+    command: redis-server --requirepass ${REDIS_PASSWORD}

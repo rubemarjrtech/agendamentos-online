@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["partialIndexes"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id       String   @id @default(cuid())
+  email    String   @unique
+  passwordHash String   @map("password_hash")
+  role     Roles   @default(CLIENT)
+  createdAt DateTime @default(now()) @map("created_at")
+  appointments Appointment[]
+
+  @@map("users")
+}
+
+model Service {
+  id       String      @id @default(cuid())
+  name     String
+  duration Int
+  active   Boolean  @default(true)
+  appointments Appointment[]
+
+  @@map("services")
+}
+
+model Appointment {
+  id          String    @id @default(cuid())
+  user        User      @relation(fields: [user_id], references: [id])
+  user_id     String    @map("user_id")
+  service     Service   @relation(fields: [service_id], references: [id])
+  service_id  String       @map("service_id")
+  clientName  String    @map("client_name")
+  clientPhone String    @map("client_phone")
+  date        DateTime  @map("date")
+  time        String    @map("time")
+  status      AppointmentStatus @default(SCHEDULED) @map("status")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at")
+
+  @@map("appointments")
+  @@unique([date, time, service_id], name: "active_booking_idx", where: raw("status != 'CANCELLED'"))
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+enum Roles {
+  CLIENT
+  ADMIN
+}
