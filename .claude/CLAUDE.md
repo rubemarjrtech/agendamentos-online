@@ -20,10 +20,11 @@ Antes de modificar ou criar novas funcionalidades, leia a documentação corresp
 
 ## Diretrizes Inquebráveis
 
-1. **Nunca altere o client Prisma manualmente.** Ele é gerado em `node_modules`.
-2. **Concorrência:** Qualquer rota de agendamento deve respeitar o lock atômico no Redis (TTL de 5 min) antes de tocar no PostgreSQL.
-3. **Erros:** Use sempre exceptions do NestJS e filters globais. Não espalhe `try/catch`.
-4. **Validação:** Todas as rotas devem ter validação de body, params e query via DTOs e Pipes.
+1. **Comprometimento** NUNCA reescreva código "só para funcionar/validar", sempre siga a risca o que foi pedido pelo usuário e o que há escrito na documentação (docs). Caso esteja em uma situação que não sabe o que fazer, por exemplo ao não conseguir iniciar a aplicação, ou o estilo/escrita de código que foi pedido causa bugs/quebre a aplicação, reporte ao usuário e aguarde seu feedback sobre o que fazer.
+2. **Nunca altere o client Prisma manualmente.** Ele é gerado em `node_modules`.
+3. **Concorrência:** Qualquer rota de agendamento deve respeitar o lock atômico no Redis (TTL de 5 min) antes de tocar no PostgreSQL.
+4. **Erros:** Use sempre exceptions do NestJS e filters globais. Não espalhe `try/catch`.
+5. **Validação:** Todas as rotas devem ter validação de body, params e query via DTOs e Pipes.
 
 ## Comandos Úteis
 

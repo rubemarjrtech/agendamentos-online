@@ -2,10 +2,34 @@ import { Module } from '@nestjs/common';
 import { AppController } from '@app/app.controller';
 import { AppService } from '@app/app.service';
 import { DatabaseModule } from '@database/database.module';
+import { ConfigModule } from '@nestjs/config';
+import { CacheModule } from '@cache/cache.module';
+import { AuthModule } from '@auth/auth.module';
+import { APP_PIPE, APP_FILTER } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
+import { JwtErrorFilter } from '@common/filters/jwt-error.filter';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [
+    DatabaseModule,
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+      ignoreEnvFile: process.env.NODE_ENV === 'production',
+    }),
+    CacheModule,
+    AuthModule,
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_PIPE,
+      useValue: new ValidationPipe({ transform: true, whitelist: true }),
+    },
+    {
+      provide: APP_FILTER,
+      useClass: JwtErrorFilter,
+    },
+  ],
 })
 export class AppModule {}

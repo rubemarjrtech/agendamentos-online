@@ -137,6 +137,10 @@ export class AppModule {}
 
 Nunca registre em main.ts, priorize organização de código e legibilidade.
 
+---
+
+Crie DTOs diferentes para Request (dados de entrada) e saída (dados de saída). Use a biblioteca class-validator para validações de DTOs.
+
 ## Segurança
 
 - O código deve ser seguro, NUNCA usar segredos, senhas, URLs de conexão ou qualquer coisa do tipo hardcoded, sempre utilize variáveis de ambiente para tal.
@@ -146,4 +150,4 @@ Nunca registre em main.ts, priorize organização de código e legibilidade.
 - Rate Limiting é essencial para evitar Brute Force ou DoS.
 - Avise ao usuário sobre código possivelmente com falhas de segurança, exemplo:
   - Risco de XSS (Cross Site Scripting) devido a dados sensíveis ou token no Local Storage.
-  - Risco de Man in The Middle e vazamento de dados sensíveis: Dados sensíveis devem ir no token, e coisas como hash de senha ou `{ admin: true }` jamais devem estar no Body da resposta.
+  - Risco de Man in The Middle e vazamento de dados sensíveis: Dados sensíveis devem ir no token, e coisas como hash de senha, email ou `{ admin: true }` jamais devem estar no Body da resposta.

@@ -16,6 +16,7 @@
     "tsBuildInfoFile": "./dist/.tsbuildinfo",
     "incremental": true,
     "skipLibCheck": true,
+    "strictPropertyInitialization": false,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
@@ -27,6 +28,18 @@
       ],
       "@database/*": [
         "./src/database/*"
+      ],
+      "@cache/*": [
+        "./src/cache/*"
+      ],
+      "@auth/*": [
+        "./src/auth/*"
+      ],
+      "@token/*": [
+        "./src/token/*"
+      ],
+      "@common/*": [
+        "./src/common/*"
       ]
     },
     "types": [
