@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { hash, compare } from 'bcryptjs';
+import { HashServiceProtocol } from './hash.service.protocol';
 
 @Injectable()
-export class HashService {
+export class HashService implements HashServiceProtocol {
   async hash(plain: string): Promise<string> {
     return hash(plain, 12);
   }

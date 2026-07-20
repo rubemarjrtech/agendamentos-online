@@ -40,6 +40,9 @@
       ],
       "@common/*": [
         "./src/common/*"
+      ],
+      "@scheduling/*": [
+        "./src/scheduling/*"
       ]
     },
     "types": [

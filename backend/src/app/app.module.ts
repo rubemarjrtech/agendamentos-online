@@ -5,9 +5,11 @@ import { DatabaseModule } from '@database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { CacheModule } from '@cache/cache.module';
 import { AuthModule } from '@auth/auth.module';
+import { SchedulingModule } from '@scheduling/scheduling.module';
 import { APP_PIPE, APP_FILTER } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { JwtErrorFilter } from '@common/filters/jwt-error.filter';
+import { TokenModule } from '@token/token.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { JwtErrorFilter } from '@common/filters/jwt-error.filter';
     }),
     CacheModule,
     AuthModule,
+    SchedulingModule,
+    TokenModule,
   ],
   controllers: [AppController],
   providers: [

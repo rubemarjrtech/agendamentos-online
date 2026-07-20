@@ -1,18 +1,18 @@
 import { Injectable, UnauthorizedException, ConflictException, Inject } from '@nestjs/common';
 import { DatabaseService } from '@database/database.service';
-import { HashService } from './hash/hash.service';
 import type { TokenPayload } from '@token/token.service';
 import { Roles } from '@prisma/client';
 import type { ConfigType } from '@nestjs/config';
 import authConfig from './config/auth-config';
 import { AuthResponseDto } from './dto/auth-response.dto';
 import { TokenServiceProtocol } from '@token/token.service.protocol';
+import { HashServiceProtocol } from './hash/hash.service.protocol';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly database: DatabaseService,
-    private readonly hash: HashService,
+    private readonly hash: HashServiceProtocol,
     private readonly token: TokenServiceProtocol,
     @Inject(authConfig.KEY)
     private readonly config: ConfigType<typeof authConfig>,
@@ -57,12 +57,12 @@ export class AuthService {
   }
 
   async adminLogin(email: string, password: string): Promise<AuthResponseDto> {
-    const adminUser = this.config.ADMIN_USER;
+    const adminEmail = this.config.ADMIN_EMAIL;
     const adminPassword = this.config.ADMIN_PASSWORD;
-    const validUser = email === adminUser;
+    const validEmail = email === adminEmail;
     const validPassword = password === adminPassword;
 
-    if (!validUser || !validPassword) {
+    if (!validEmail || !validPassword) {
       throw new UnauthorizedException('Credenciais inválidas');
     }
 

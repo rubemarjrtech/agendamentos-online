@@ -3,6 +3,8 @@ import { Redis } from 'ioredis';
 import cacheConfig from '@cache/config/cache.config';
 import { ConfigModule, type ConfigType } from '@nestjs/config';
 import { REDIS_CLIENT } from '@cache/constants/redis-client';
+import { CacheServiceProtocol } from './cache.service.protocol';
+import { CacheService } from './cache.service';
 
 @Module({
   imports: [ConfigModule.forFeature(cacheConfig)],
@@ -18,7 +20,11 @@ import { REDIS_CLIENT } from '@cache/constants/redis-client';
         });
       },
     },
+    {
+      provide: CacheServiceProtocol,
+      useClass: CacheService,
+    },
   ],
-  exports: [REDIS_CLIENT],
+  exports: [CacheServiceProtocol],
 })
 export class CacheModule {}
