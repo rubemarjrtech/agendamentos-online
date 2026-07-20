@@ -1,18 +1,19 @@
 import { Injectable, UnauthorizedException, ConflictException, Inject } from '@nestjs/common';
 import { DatabaseService } from '@database/database.service';
 import { HashService } from './hash/hash.service';
-import { TokenService, type TokenPayload } from '@token/token.service';
+import type { TokenPayload } from '@token/token.service';
 import { Roles } from '@prisma/client';
 import type { ConfigType } from '@nestjs/config';
 import authConfig from './config/auth-config';
 import { AuthResponseDto } from './dto/auth-response.dto';
+import { TokenServiceProtocol } from '@token/token.service.protocol';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly database: DatabaseService,
     private readonly hash: HashService,
-    private readonly token: TokenService,
+    private readonly token: TokenServiceProtocol,
     @Inject(authConfig.KEY)
     private readonly config: ConfigType<typeof authConfig>,
   ) {}
@@ -29,7 +30,7 @@ export class AuthService {
       data: { email, passwordHash, role: Roles.CLIENT },
     });
     const payload: TokenPayload = { sub: user.id, email: user.email, role: user.role };
-    const token = await this.token.generate(payload);
+    const token = await this.token.generateAsync(payload);
 
     return {
       accessToken: token,
@@ -48,7 +49,7 @@ export class AuthService {
     }
 
     const payload: TokenPayload = { sub: user.id, email: user.email, role: user.role };
-    const token = await this.token.generate(payload);
+    const token = await this.token.generateAsync(payload);
 
     return {
       accessToken: token,
@@ -66,7 +67,7 @@ export class AuthService {
     }
 
     const payload: TokenPayload = { sub: 'admin', email, role: Roles.ADMIN };
-    const token = await this.token.generate(payload);
+    const token = await this.token.generateAsync(payload);
 
     return {
       accessToken: token,
