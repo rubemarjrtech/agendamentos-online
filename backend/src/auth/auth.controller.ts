@@ -1,7 +1,7 @@
 import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterRequestDto } from './dto/register-request.dto';
-import { AdminLoginRequestDto, LoginRequestDto } from './dto/login-request.dto';
+import { LoginRequestDto } from './dto/login-request.dto';
 import { AuthResponseDto } from './dto/auth-response.dto';
 
 @Controller('auth')
@@ -22,7 +22,7 @@ export class AuthController {
 
   @Post('admin/login')
   @HttpCode(HttpStatus.OK)
-  async adminLogin(@Body() dto: AdminLoginRequestDto): Promise<AuthResponseDto> {
-    return await this.authService.adminLogin(dto.user, dto.password);
+  async adminLogin(@Body() dto: LoginRequestDto): Promise<AuthResponseDto> {
+    return await this.authService.adminLogin(dto.email, dto.password);
   }
 }

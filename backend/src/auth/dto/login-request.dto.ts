@@ -7,11 +7,3 @@ export class LoginRequestDto {
   @IsString()
   password: string;
 }
-
-export class AdminLoginRequestDto {
-  @IsString()
-  user: string;
-
-  @IsString()
-  password: string;
-}
