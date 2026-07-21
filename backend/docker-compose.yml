@@ -1,6 +1,6 @@
 services:
   postgres:
-    container_name: api-agendamentos
+    container_name: postgres-agendamentos
     image: postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
