@@ -43,6 +43,9 @@
       ],
       "@scheduling/*": [
         "./src/scheduling/*"
+      ],
+      "@admin/*": [
+        "./src/admin/*"
       ]
     },
     "types": [
