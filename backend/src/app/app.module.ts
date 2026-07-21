@@ -7,10 +7,11 @@ import { CacheModule } from '@cache/cache.module';
 import { AuthModule } from '@auth/auth.module';
 import { SchedulingModule } from '@scheduling/scheduling.module';
 import { AdminModule } from '@admin/admin.module';
-import { APP_PIPE, APP_FILTER } from '@nestjs/core';
+import { APP_PIPE, APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { JwtErrorFilter } from '@common/filters/jwt-error.filter';
 import { TokenModule } from '@token/token.module';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -24,6 +25,23 @@ import { TokenModule } from '@token/token.module';
     SchedulingModule,
     AdminModule,
     TokenModule,
+    ThrottlerModule.forRoot([
+      {
+        name: 'short',
+        ttl: 1000,
+        limit: 3,
+      },
+      {
+        name: 'medium',
+        ttl: 10000,
+        limit: 20,
+      },
+      {
+        name: 'long',
+        ttl: 60000,
+        limit: 100,
+      },
+    ]),
   ],
   controllers: [AppController],
   providers: [
@@ -35,6 +53,10 @@ import { TokenModule } from '@token/token.module';
     {
       provide: APP_FILTER,
       useClass: JwtErrorFilter,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
     },
   ],
 })
