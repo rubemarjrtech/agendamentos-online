@@ -143,4 +143,7 @@ pnpm docker:up
 
 # Parar containers
 pnpm docker:down
+
+# Formatar arquivos ts
+pnpm format
 ```
