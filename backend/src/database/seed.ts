@@ -31,7 +31,7 @@ async function main() {
 
 main()
   .catch((e) => {
-    console.error('❌ Erro ao executar o seed:', e);
+    console.error('Erro ao executar o seed:', e);
     process.exit(1);
   })
   .finally(async () => {
