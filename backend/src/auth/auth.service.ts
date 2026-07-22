@@ -34,6 +34,11 @@ export class AuthService {
 
     return {
       accessToken: token,
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      },
     };
   }
 
@@ -53,6 +58,11 @@ export class AuthService {
 
     return {
       accessToken: token,
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      },
     };
   }
 
@@ -71,6 +81,7 @@ export class AuthService {
 
     return {
       accessToken: token,
+      user: { id: 'admin', email, role: Roles.ADMIN },
     };
   }
 }

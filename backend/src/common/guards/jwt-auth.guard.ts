@@ -7,13 +7,12 @@ export class JwtAuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const authHeader = request.headers.authorization;
+    const token = request.cookies?.['ACCESS_TOKEN'];
 
-    if (!authHeader?.startsWith('Bearer ')) {
-      throw new UnauthorizedException('Token não fornecido');
+    if (!token) {
+      throw new UnauthorizedException('Token não fornecido ou cookie ausente');
     }
 
-    const token = authHeader.substring(7);
     const payload = await this.tokenService.verifyAsync(token);
     request.user = payload;
 
