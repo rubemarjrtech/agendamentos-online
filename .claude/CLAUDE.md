@@ -17,6 +17,7 @@ Antes de modificar ou criar novas funcionalidades, leia a documentação corresp
 - **Convenções de Banco de Dados:** Consulte `docs/schema-conventions.md` e `docs/migration-best-practices.md`.
 - **Design do Banco de Dados:** Consulte `docs/database-design.md`.
 - **Overview e Stack utilizada no Back End**: Consulte `docs/backend-stack.md`
+- **Padrões de Código e Estruturação de pastas Frontend com React:** Consulte `docs/frontend-rules.md`
 
 ## Diretrizes Inquebráveis
 

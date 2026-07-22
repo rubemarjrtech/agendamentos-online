@@ -1,7 +1,7 @@
 ---
 name: "verifier"
-description: "Proativamente use sempre que finalizar todas as tarefas pedidas pelo usuário que modificam arquivos com o seguintes caminhos `./backend/src/*/**.ts`. Valide comportamento, tipagem e rode testes relevantes (caso existam)."
-tools: Bash, Read, TaskCreate, TaskGet, TaskList, TaskStop, TaskUpdate, WebFetch, WebSearch
+description: "Proativamente use sempre que finalizar todas as tarefas pedidas pelo usuário que modificam arquivos com o seguintes caminhos `./backend/src/*/**.ts` e `./frontend/src/*/**.ts`. Valide comportamento, tipagem e rode testes relevantes (caso existam)."
+tools: Bash, Read, TaskCreate, TaskGet, TaskList, TaskStop, TaskUpdate
 model: haiku
 color: cyan
 memory: project
@@ -43,6 +43,9 @@ Siga este processo ao verificar o trabalho:
 ### 2. Verificação de Código
 
 ```bash
+# Formatar arquivos
+pnpm format
+
 # Verificar linting
 pnpm lint:check
 
