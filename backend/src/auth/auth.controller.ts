@@ -30,7 +30,13 @@ export class AuthController {
   ): Promise<AuthBodyResponseDto> {
     const { accessToken, user } = await this.authService.register(dto.email, dto.password);
 
-    res.cookie(ACCESS_TOKEN, accessToken);
+    res.cookie(ACCESS_TOKEN, accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 24 * 60 * 60 * 1000,
+      sameSite: 'lax',
+      path: '/',
+    });
 
     return {
       id: user.id,
@@ -48,7 +54,13 @@ export class AuthController {
   ): Promise<AuthBodyResponseDto> {
     const { accessToken, user } = await this.authService.login(dto.email, dto.password);
 
-    res.cookie(ACCESS_TOKEN, accessToken);
+    res.cookie(ACCESS_TOKEN, accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 24 * 60 * 60 * 1000,
+      sameSite: 'lax',
+      path: '/',
+    });
 
     return {
       id: user.id,
@@ -66,13 +78,31 @@ export class AuthController {
   ): Promise<AuthBodyResponseDto> {
     const { accessToken, user } = await this.authService.adminLogin(dto.email, dto.password);
 
-    res.cookie(ACCESS_TOKEN, accessToken);
+    res.cookie(ACCESS_TOKEN, accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 24 * 60 * 60 * 1000,
+      sameSite: 'lax',
+      path: '/',
+    });
 
     return {
       id: user.id,
       email: user.email,
       role: user.role,
     };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('logout')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  logout(@Res({ passthrough: true }) res: Response) {
+    res.clearCookie(ACCESS_TOKEN, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+    });
   }
 
   @UseGuards(JwtAuthGuard)
