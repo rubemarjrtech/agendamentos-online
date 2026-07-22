@@ -25,3 +25,6 @@ dist-ssr
 
 # Variaveis de ambiente
 .env
+
+# Assets
+assets

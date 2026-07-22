@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       isLoading: false,
     });
 
-    navigate('/appointment', { replace: true });
+    navigate('/appointments', { replace: true });
   };
   const markAsLoggedOut = async () => {
     try {
