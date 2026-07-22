@@ -1,4 +1,10 @@
-import { Injectable, UnauthorizedException, ConflictException, Inject } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  ConflictException,
+  Inject,
+  NotFoundException,
+} from '@nestjs/common';
 import { DatabaseService } from '@database/database.service';
 import type { TokenPayload } from '@token/token.service';
 import { Roles } from '@prisma/client';
@@ -7,6 +13,7 @@ import authConfig from './config/auth-config';
 import { AuthResponseDto } from './dto/auth-response.dto';
 import { TokenServiceProtocol } from '@token/token.service.protocol';
 import { HashServiceProtocol } from './hash/hash.service.protocol';
+import { MeResponseDto } from './dto/me-response.dto';
 
 @Injectable()
 export class AuthService {
@@ -82,6 +89,22 @@ export class AuthService {
     return {
       accessToken: token,
       user: { id: 'admin', email, role: Roles.ADMIN },
+    };
+  }
+
+  async me(id: string): Promise<MeResponseDto> {
+    const user = await this.database.user.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!user) throw new NotFoundException('Usuário não encontrado');
+
+    return {
+      id: user.id,
+      email: user.email,
+      role: user.role,
     };
   }
 }

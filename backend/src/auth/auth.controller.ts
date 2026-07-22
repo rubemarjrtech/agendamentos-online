@@ -1,11 +1,22 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, Res } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpCode,
+  HttpStatus,
+  Res,
+  Req,
+  Get,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterRequestDto } from './dto/register-request.dto';
 import { LoginRequestDto } from './dto/login-request.dto';
 import { AuthBodyResponseDto } from './dto/auth-response.dto';
 import { Throttle } from '@nestjs/throttler';
-import type { Response } from 'express';
+import type { Request, Response } from 'express';
 import { ACCESS_TOKEN } from './constants/cookie-names';
+import { JwtAuthGuard } from '@common/guards/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -62,5 +73,13 @@ export class AuthController {
       email: user.email,
       role: user.role,
     };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/me')
+  @HttpCode(HttpStatus.OK)
+  async me(@Req() req: Request) {
+    const user = req['user']['sub'];
+    return await this.authService.me(user);
   }
 }
