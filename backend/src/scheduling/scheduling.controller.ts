@@ -17,6 +17,7 @@ import { JwtAuthGuard } from '@common/guards/jwt-auth.guard';
 import { AvailabilityResponseDto } from './dto/availability-response.dto';
 import { CreateLockResponseDto } from './dto/create-lock-response.dto';
 import { AppointmentResponseDto } from './dto/appointment-response.dto';
+import type { Request } from 'express';
 
 @Controller('scheduling')
 export class SchedulingController {
@@ -36,9 +37,9 @@ export class SchedulingController {
   @HttpCode(HttpStatus.OK)
   async acquireLock(
     @Body() dto: CreateLockRequestDto,
-    @Req() req: any,
+    @Req() req: Request,
   ): Promise<CreateLockResponseDto> {
-    const userId = req.user.sub;
+    const userId = req['user']['sub'];
     return await this.schedulingService.acquireLock(dto.serviceId, dto.date, dto.time, userId);
   }
 
@@ -47,9 +48,9 @@ export class SchedulingController {
   @HttpCode(HttpStatus.OK)
   async confirmAppointment(
     @Body() dto: CreateAppointmentRequestDto,
-    @Req() req: any,
+    @Req() req: Request,
   ): Promise<AppointmentResponseDto> {
-    const userId = req.user.sub;
+    const userId = req['user']['sub'];
     return await this.schedulingService.confirmAppointment(userId, dto);
   }
 }

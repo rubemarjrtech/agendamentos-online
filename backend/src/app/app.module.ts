@@ -12,6 +12,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { JwtErrorFilter } from '@common/filters/jwt-error.filter';
 import { TokenModule } from '@token/token.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { AppointmentServicesModule } from '@appointment-services/appointment-services.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
     SchedulingModule,
     AdminModule,
     TokenModule,
+    AppointmentServicesModule,
     ThrottlerModule.forRoot([
       {
         name: 'short',
