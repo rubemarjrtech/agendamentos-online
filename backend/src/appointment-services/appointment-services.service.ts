@@ -9,6 +9,10 @@ export class AppointmentServices {
   async findAll(): Promise<FindServicesRespondeDto[]> {
     const services = await this.database.service.findMany();
 
-    return services.map((service) => ({ id: service.id, name: service.name }));
+    return services.map((service) => ({
+      id: service.id,
+      name: service.name,
+      duration: service.duration,
+    }));
   }
 }
