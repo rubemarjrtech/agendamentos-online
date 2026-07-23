@@ -1,25 +1,24 @@
 import { api } from '@lib/axios';
-import type { AuthResponse, User } from '@app_types/auth';
+import type { User } from '@app_types/auth';
 
 interface LoginCredentials {
   email: string;
   password: string;
 }
 
-export async function register(credentials: LoginCredentials): Promise<AuthResponse> {
-  const { data } = await api.post<AuthResponse>('/api/auth/register', credentials);
+export async function register(credentials: LoginCredentials): Promise<User> {
+  const { data } = await api.post<User>('/api/auth/register', credentials);
 
   return data;
 }
 
-export async function login(credentials: LoginCredentials): Promise<AuthResponse> {
-  const { data } = await api.post<AuthResponse>('/api/auth/login', credentials);
-
+export async function login(credentials: LoginCredentials): Promise<User> {
+  const { data } = await api.post<User>('/api/auth/login', credentials);
   return data;
 }
 
-export async function adminLogin(credentials: LoginCredentials): Promise<AuthResponse> {
-  const { data } = await api.post<AuthResponse>('/api/auth/admin/login', credentials);
+export async function adminLogin(credentials: LoginCredentials): Promise<User> {
+  const { data } = await api.post<User>('/api/auth/admin/login', credentials);
 
   return data;
 }

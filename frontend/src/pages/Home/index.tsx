@@ -36,7 +36,7 @@ const Home = () => {
     try {
       const action = isRegister ? registerApi : loginApi;
       const response = await action(data);
-      loginContext(response.user);
+      loginContext(response);
     } catch (err) {
       setApiError(err instanceof Error ? err.message : 'Ocorreu um erro');
     } finally {

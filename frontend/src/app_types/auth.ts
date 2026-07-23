@@ -11,7 +11,3 @@ export interface AuthState {
   error: string | null;
   isLoading: boolean;
 }
-
-export interface AuthResponse {
-  user: User;
-}

@@ -13,12 +13,11 @@ const AppRoutes = () => {
           {/* Rotas públicas */}
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route path="/appointments" element={<Appointments />} />
 
           {/* Rotas protegidas */}
           <Route element={<ProtectedRoutes />}>
-            <Route element={<AppLayout />}>
-              <Route path="/appointments" element={<Appointments />} />
-            </Route>
+            <Route element={<AppLayout />}></Route>
           </Route>
 
           <Route path="*" element={<h2>Page not found</h2>} />

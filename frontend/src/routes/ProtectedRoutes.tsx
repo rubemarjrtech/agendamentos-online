@@ -2,10 +2,11 @@ import { Navigate, Outlet } from 'react-router';
 import { useAuth } from '@hooks/useAuth';
 
 const PrivateRoutes = () => {
-  const { isAuthenticated } = useAuth();
+  const { user } = useAuth();
+  console.log('ProtectedRoutes checou o user:', user);
 
-  if (!isAuthenticated) {
-    return <Navigate to={'/login'} replace />;
+  if (!user) {
+    return <Navigate to="/home" replace />;
   }
 
   return <Outlet />;

@@ -1,1 +1,43 @@
 @import 'tailwindcss';
+
+.react-datepicker {
+  border: none !important;
+  background-color: transparent !important;
+  font-family: inherit !important;
+}
+
+.react-datepicker__month-container {
+  width: 100%;
+}
+
+.react-datepicker__header {
+  background-color: white !important;
+  border-bottom: 1px solid rgb(229 231 235) !important;
+}
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header,
+.react-datepicker__day-name {
+  color: rgb(17 24 39) !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: rgb(37 99 235) !important;
+  color: white !important;
+}
+
+.react-datepicker__day:hover {
+  border-radius: 0.75rem !important;
+}
+
+.react-datepicker__day,
+.react-datepicker__day-name {
+  border-radius: 0.75rem !important;
+}
+
+.scheduling-calendar {
+  width: 100%;
+  background: transparent;
+}
