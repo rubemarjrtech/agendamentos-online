@@ -40,14 +40,6 @@ pnpm format       # Prettier (formatar código)
 
 ## Biblioteca de componentes UI
 
-### Radix UI
-
-Componentes headless e acessíveis como base para a UI:
-
-- Primitivas de formulário, dialogs, dropdowns, popovers
-- Gerenciamento de foco e navegação por teclado
-- A11y built-in (ARIA attributes)
-
 ### Lucide React
 
 Biblioteca de ícones SVG:
@@ -283,7 +275,6 @@ const confirmAppointment = async (payload: CreateAppointmentDto) => {
 - **Projeto utiliza estilo Mobile First:** Implementar estiles mobile first com tailwind
 - **Sem SSR no MVP:** SPA pura com Vite — mais simples e rápido de desenvolver
 - **Polling no cliente:** 5s para atualizar grade de horários (mesmo intervalo do backend)
-- **Componentes headless:** radix-ui para a11y pronta sem opinar sobre estilo
 - **Animações sutis:** framer-motion apenas para feedback e transições necessárias
 - **TypeScript estrito:** tipos genéricos para respostas de API (`ApiResponse<T>`)
 - **Forms:** controlar via React Hook Form se necessário (a decidir por feature)
