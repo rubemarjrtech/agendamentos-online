@@ -13,32 +13,8 @@
     "allowArbitraryExtensions": true,
     "skipLibCheck": true,
     "paths": {
-      "@utils/*": [
-        "./src/utils/*"
-      ],
-      "@hooks/*": [
-        "./src/hooks/*"
-      ],
-      "@layouts/*": [
-        "./src/layouts/*"
-      ],
-      "@lib/*": [
-        "./src/lib/*"
-      ],
-      "@app_types/*": [
-        "./src/types/*"
-      ],
-      "@pages/*": [
-        "./src/pages/*"
-      ],
-      "@services/*": [
-        "./src/services/*"
-      ],
-      "@components/*": [
-        "./src/components/*"
-      ],
-      "@assets/*": [
-        "./src/assets/*"
+      "@*": [
+        "./src/*"
       ]
     },
     /* Bundler mode */
