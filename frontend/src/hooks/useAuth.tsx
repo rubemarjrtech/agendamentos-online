@@ -54,21 +54,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       error: null,
       isLoading: false,
     });
-    console.log(user);
     navigate(user.role === 'ADMIN' ? '/admin/dashboard' : '/appointments', { replace: true });
   };
   const markAsLoggedOut = async () => {
+    // eslint-disable-next-line no-useless-catch
     try {
       await logout();
-    } catch (error) {
-      console.error('Erro ao fazer logout na API', error);
-    } finally {
-      setAuthState({
-        user: null,
-        error: null,
-        isLoading: false,
-      });
-      navigate('/home', { replace: true });
+    } catch (err) {
+      throw err;
     }
   };
 
