@@ -64,11 +64,11 @@ Essa forma de login foi feita com o intuito de simplicidade.
 ## Explicação das decisões técnicas
 
 O principal foco foi a experiência do usuário, que pode ser frustrante em sistemas de agendamento.
-A decisão por redis (como cache para travas de horário) e short polling (requisições espaçadas, em vez de websockets) se deu por alguns motivos:
+A decisão por redis (como cache para travas de horário) e short polling (requisições espaçadas, em vez de websockets) para buscar horários, se deu por alguns motivos:
 
-- Websockets criam complexidade desnecessária no desenvolvimento de um sistema simples.
-- A partir da decisão de usar short polling em vez de websockets, salvar travas de horário no banco não era uma opção porque sobrecarregaria o banco. O polling é feito de 5 em 5 segundos, então a medida que a quantidade de usuários cresce, a quantidade de requisições também, o que pode ser catastrófico no quesito lentidão e experiência do usuário em produção.
-- A partir disso, veio a decisão por usar o Redis como cache para as travas de horários. Além de ser performático, as travas tem TTL e se já houver uma trava para aquele serviço, dia e horário, a requisição nem chega a tocar o banco, então há uma ganho de performance.
+- Para melhorar a experiência do usuário, não queria que ele fosse até o final do fluxo só para receber uma mensagem de erro, isso é frustrante, então optei por uma estratégia de trava de serviço-data-horário, quando o usuário seleciona um horário, automaticamente ninguém mais vai poder selecionar o mesmo horário por 5 minutos (tempo para o usuário preencher o resto do formulário)
+- A partir da decisão de usar short polling em vez de websockets (que aumentariam a complexidade do desenvolvimento), salvar travas de horário no banco não era uma opção porque sobrecarregaria o banco. O polling é feito de 5 em 5 segundos, então a medida que a quantidade de usuários cresce, a quantidade de requisições também, o que pode ser catastrófico no quesito lentidão e experiência do usuário em produção.
+- A partir disso, veio a decisão por usar o Redis como cache para as travas de horários. Além de ser performático, as travas tem TTL de 5 minutos e se já houver uma trava para aquele serviço, dia e horário, a requisição nem chega a tocar o banco, então há uma ganho de performance.
 - O Redis também pode cair e quebrar a aplicação, mas na balança, os trade-offs pareceram melhores, na minha opinião, com o Redis.
 - Monolito Modular no backend para facilitar e simplificar o desenvolvimento, garantindo separação de responsabilidades e facilidade de manutenção. O NestJS, na minha opinião, brilha em monolitos modulares.
 - Estrutura Clássica no frontend para agrupar por responsabilidade. Tenho mais familiaridade com React.
