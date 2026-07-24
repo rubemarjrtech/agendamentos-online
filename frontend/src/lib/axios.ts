@@ -19,9 +19,17 @@ api.interceptors.response.use(
       const status = error.response.status;
 
       if (status === 401) {
-        error.message = 'Sessão expirada ou usuário não autenticado.';
-        console.error('Sessão expirada ou usuário não autenticado.');
-        window.location.href = '/home';
+        error.message = 'Usuário não autenticado ou sessão expirada.';
+        console.error('Usuário não autenticado ou sessão expirada.');
+        const requestUrl = error.config?.url || '';
+
+        if (!requestUrl.includes('/auth/me') && !requestUrl.includes('/auth/login')) {
+          window.location.href = '/home';
+        }
+      }
+      if (status === 404) {
+        error.message = 'Credenciais inválidas.';
+        console.error('Usuário não autenticado ou sessão expirada.');
       }
       if (status === 409) {
         error.message = 'E-mail já está em uso.';
