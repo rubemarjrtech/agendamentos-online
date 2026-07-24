@@ -52,12 +52,12 @@ export class AuthService {
   async login(email: string, password: string): Promise<AuthResponseDto> {
     const user = await this.database.user.findUnique({ where: { email } });
     if (!user) {
-      throw new UnauthorizedException('Credenciais inválidas');
+      throw new NotFoundException('Credenciais inválidas');
     }
 
     const valid = await this.hash.compare(password, user.passwordHash);
     if (!valid) {
-      throw new UnauthorizedException('Credenciais inválidas');
+      throw new NotFoundException('Credenciais inválidas');
     }
 
     const payload: TokenPayload = { sub: user.id, email: user.email, role: user.role };
