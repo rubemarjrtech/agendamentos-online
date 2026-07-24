@@ -54,8 +54,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       error: null,
       isLoading: false,
     });
-
-    navigate('/appointments', { replace: true });
+    console.log(user);
+    navigate(user.role === 'ADMIN' ? '/admin/dashboard' : '/appointments', { replace: true });
   };
   const markAsLoggedOut = async () => {
     try {
@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       value={{
         user: authState.user,
         isAuthenticated: !!authState.user,
-        isAdmin: authState.user?.role === 'admin',
+        isAdmin: authState.user?.role === 'ADMIN',
         login,
         markAsLoggedOut,
       }}

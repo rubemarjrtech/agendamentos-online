@@ -2,9 +2,8 @@ import { Outlet } from 'react-router';
 
 const AppLayout = () => {
   return (
-    <div className="min-h-screen flex flex-col">
-      // Header Aqui
-      <main className="grow py-6">
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      <main className="grow">
         <Outlet />
       </main>
     </div>
