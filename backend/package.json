@@ -24,6 +24,7 @@
     "docker:down": "docker compose down",
     "seed:dev": "ts-node src/database/seed.ts",
     "seed:prod": "node dist/database/seed.js",
+    "start:migrate:dev": "npx prisma generate && npx prisma migrate deploy",
     "start:migrate:prod": "npx prisma generate && npx prisma migrate deploy && pnpm seed:prod && node dist/main.js"
   },
   "dependencies": {
