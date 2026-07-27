@@ -1,10 +1,4 @@
-import {
-  Injectable,
-  UnauthorizedException,
-  ConflictException,
-  Inject,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, ConflictException, Inject, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from '@database/database.service';
 import type { TokenPayload } from '@token/token.service';
 import { Roles } from '@prisma/client';
@@ -80,7 +74,7 @@ export class AuthService {
     const validPassword = password === adminPassword;
 
     if (!validEmail || !validPassword) {
-      throw new UnauthorizedException('Credenciais inválidas');
+      throw new NotFoundException('Credenciais inválidas');
     }
 
     const payload: TokenPayload = { sub: 'admin', email, role: Roles.ADMIN };
