@@ -1,10 +1,10 @@
-### Sistema de Agendamento Online FullStack
+### Full-Stack Online Scheduling System
 
-Este projeto foi feito utilizando React.js e NestJS.
+This project was built using React.js and NestJS.
 
-## Tecnologias
+## Technologies
 
-As tecnologias utilizadas neste projeto foram:
+The technologies used in this project are:
 
 - NestJS
 - React.js
@@ -13,62 +13,132 @@ As tecnologias utilizadas neste projeto foram:
 - Redis
 - Vite
 
-## Ferramentas de IA utilizadas
-
-- Free Claude Code com modelos grátis. Link de como usar: https://github.com/Alishahryar1/free-claude-code
-- Github Copilot. Com o roteamento de modelo da ferramenta, o modelo disponibilizado foi o gpt-5.4-mini
-
-## Dependencias
+## Dependencies
 
 - Docker
 - Docker Compose
 - pnpm
 
-## Configuração do projeto localmente
+## Local Project Setup
 
-Clone o repositório, e a partir da raiz do projeto /agendamento, rode:
+Clone the repository, then from the project root `/agendamento`, run:
+
 `cd backend/`
 
-**Crie um arquivo .env na raiz do projeto, copie e preencha as variáveis de ambiente com base em .env.example antes de rodar os próximos comandos, se não, a inicialização irá falhar**
+**Create a `.env` file in the project root. Copy the environment variables from `.env.example` and fill them in before running the next commands; otherwise, the application startup will fail.**
 
-**Se não possuir o docker compose instalado, também é possível criar os containers pelo Docker Desktop**
+**If you do not have Docker Compose installed, you can also create the containers using Docker Desktop.**
 
-Em seguida, rode o comando:
+Then run:
+
 `pnpm install --frozen-lockfile && pnpm docker:build && pnpm start:migrate:dev && pnpm seed:dev && pnpm start:dev`
 
-Com o backend inicializado, em um outro terminal, a partir da pasta raiz do projeto /agendamento, rode:
+Once the backend is running, open another terminal and, from the project root `/agendamento`, run:
+
 `cd frontend/`
 
-**Crie um arquivo .env na raiz do projeto, copie e preencha as variáveis de ambiente com base em .env.example antes de rodar o próximo comando, se não, a inicialização irá falhar**
+**Create a `.env` file in the project root. Copy the environment variables from `.env.example` and fill them in before running the next command; otherwise, the application startup will fail.**
 
-Em seguida, rode o comando:
+Then run:
+
 `pnpm dev`
 
-## Credenciais de acesso
+## Access Credentials
 
-Optei por definir variáveis de ambiente para credenciais e para a rota de acesso do Admin.
-O propósito é evitar varreduras de Bots e como prática de segurança padrão em produção, então é possível definir a rota e as credenciais de admin livremente localmente.
+I chose to define environment variables for both the administrator credentials and the admin access route.
 
-As variáveis são:
+The purpose is to reduce bot scanning and follow a standard production security practice, allowing you to freely define the admin route and credentials in your local environment.
 
-/frontend
+The required environment variables are:
+
+### `/frontend`
+
+```env
 VITE_ADMIN_URL=
+```
 
-/backend
+### `/backend`
+
+```env
 ADMIN_EMAIL=
 ADMIN_PASSWORD=
+```
 
-A rota de login do admin vai apenas validar comparando com essas variáveis.
-Essa forma de login foi feita com o intuito de simplicidade.
+The admin login route simply validates the credentials by comparing them against these environment variables.
 
-## Explicação das decisões técnicas
+This login approach was intentionally designed to keep the implementation simple.
 
-O principal foco foi a experiência do usuário, que pode ser frustrante em sistemas de agendamento.
-A decisão por redis (como cache para travas de horário) e short polling (requisições espaçadas, em vez de websockets) para buscar horários, se deu por alguns motivos:
+## How to use
 
-- Para melhorar a experiência do usuário, não queria que ele fosse até o final do fluxo só para receber uma mensagem de erro, isso é frustrante, então optei por uma estratégia de trava de serviço-data-horário, quando o usuário seleciona um horário, automaticamente ninguém mais vai poder selecionar o mesmo horário por 5 minutos (tempo para o usuário preencher o resto do formulário)
-- A partir da decisão de usar short polling em vez de websockets (que aumentariam a complexidade do desenvolvimento), salvar travas de horário no banco não era uma opção porque sobrecarregaria o banco. O polling é feito de 5 em 5 segundos, então a medida que a quantidade de usuários cresce, a quantidade de requisições também, o que pode ser catastrófico no quesito lentidão e experiência do usuário em produção.
-- A partir disso, veio a decisão por usar o Redis como cache para as travas de horários. Além de ser performático, as travas tem TTL de 5 minutos e se já houver uma trava para aquele serviço, dia e horário, a requisição nem chega a tocar o banco, então há uma ganho de performance.
-- O Redis também pode cair e quebrar a aplicação, mas na balança, os trade-offs pareceram melhores, na minha opinião, com o Redis.
-- Monolito Modular no backend para facilitar e simplificar o desenvolvimento, garantindo separação de responsabilidades e facilidade de manutenção. O NestJS, na minha opinião, brilha em monolitos modulares.
-- Estrutura Clássica no frontend para agrupar por responsabilidade. Tenho mais familiaridade com React.
+- Create Account and Log in with your credentials:
+
+<img width="1612" height="760" alt="image" src="https://github.com/user-attachments/assets/933404f8-9b25-4cbc-a011-c77c755e281f" />
+
+
+
+- Select a Service:
+
+<img width="1607" height="767" alt="image" src="https://github.com/user-attachments/assets/db5416d2-de68-4715-ba1d-07441dc0b213" />
+
+
+
+- Next step shows whenever you select a service with a dropdown menu:
+
+<img width="1613" height="776" alt="image" src="https://github.com/user-attachments/assets/a093f6f0-c0ea-4fef-885f-ab91b251cd1a" />
+
+
+
+- Pick time after selecting date, slots already booked are not selectable:
+
+<img width="1622" height="766" alt="image" src="https://github.com/user-attachments/assets/1322f863-48dd-4952-8f76-c0f28621333e" />
+
+
+
+- Finish your details:
+
+
+<img width="1618" height="781" alt="image" src="https://github.com/user-attachments/assets/618f3c24-5c8f-428a-983a-6da55a31745a" />
+
+
+
+- Get confirmation toast and message:
+
+
+<img width="1620" height="782" alt="image" src="https://github.com/user-attachments/assets/f5c4d35f-964f-4c16-ac37-9f55f966a136" />
+
+
+
+- Website is responsive:
+
+<img width="1622" height="768" alt="image" src="https://github.com/user-attachments/assets/a4484bda-4249-4abf-a1b1-6813530883de" />
+
+
+
+- Admin can view appointments:
+
+
+<img width="1626" height="775" alt="image" src="https://github.com/user-attachments/assets/626dc641-f6aa-4418-9c6c-d92d0a0b9220" />
+
+
+
+## Features
+
+The main features of the application are:
+
+Avoiding race conditions when users pick the same time slot for the same service + date and giving user time to fill in his information.
+Admin dashboard to manage appointments.
+
+## Links
+
+Repository: https://github.com/rubemarjrtech/agendamentos-online
+
+In case of sensitive bugs like security vulnerabilities, please contact rubemarrocha22@gmail.com directly instead of using issue tracker. We value your effort to improve the security and privacy of this project!
+
+## Versioning
+
+1.0.0.0
+
+## Authors
+
+Rubemar Rocha de Souza Junior
+Please follow github and join us! Thanks to visiting me and good coding!
