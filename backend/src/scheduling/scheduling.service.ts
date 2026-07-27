@@ -10,6 +10,7 @@ import { AppointmentResponseDto } from './dto/appointment-response.dto';
 import { LockStatus } from './types/lock-status.type';
 import { CacheServiceProtocol } from '@cache/cache.service.protocol';
 import { TimeSlotDto } from './types/time-slot.type';
+import { format, getHours, getMinutes } from 'date-fns';
 
 @Injectable()
 export class SchedulingService {
@@ -40,8 +41,18 @@ export class SchedulingService {
     const totalSlots =
       ((this.BUSINESS_END_HOUR - this.BUSINESS_START_HOUR) * 60) / this.SLOT_DURATION_MINUTES;
 
+    const now = new Date();
+    const todayString = format(now, 'yyyy-MM-dd');
+    const isToday = date === todayString;
+    const currentTotalMinutes = getHours(now) * 60 + getMinutes(now);
+
     for (let i = 0; i < totalSlots; i++) {
       const totalMinutes = this.BUSINESS_START_HOUR * 60 + i * this.SLOT_DURATION_MINUTES;
+
+      if (isToday && totalMinutes <= currentTotalMinutes) {
+        continue;
+      }
+
       const hours = Math.floor(totalMinutes / 60);
       const minutes = totalMinutes % 60;
       const time = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
