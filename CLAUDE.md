@@ -36,3 +36,4 @@ Antes de modificar ou criar novas funcionalidades, leia a documentação corresp
 - Verificar Lint: `pnpm lint:check` **Rodar ao final de sessões de tarefas, após o comando de formatação**
 - Aplicar Lint: `pnpm lint:fix` **Rodar ao final de sessões de tarefas, após o comando de formatação**
 - Rodar testes unitários: `pnpm test` **Rodar após escrever um ARQUIVO de testes unitários**
+- Checar se o typescript compila sem erros: `npx tsc --noEmit` **Rodar ao final de sessões de tarefas, que modificam arquivos com final .ts**
