@@ -8,7 +8,6 @@ import schedulingConfig from './config/scheduling-config';
 import type { TimeSlotDto } from './types/time-slot.type';
 import type { ConfigType } from '@nestjs/config';
 import { type DeepMockProxy, mockDeep } from 'jest-mock-extended';
-import type { AppointmentStatus } from '@prisma/client';
 import { format } from 'date-fns';
 describe('SchedulingService', () => {
   let service: SchedulingService;
@@ -29,7 +28,7 @@ describe('SchedulingService', () => {
     clientName: 'João Silva',
     clientPhone: '+5511999999999',
     date: new Date(validDate),
-    status: 'SCHEDULED' as AppointmentStatus,
+    status: 'SCHEDULED' as const,
     createdAt: new Date(),
     updatedAt: new Date(),
   };
@@ -264,7 +263,7 @@ describe('SchedulingService', () => {
       time: validTime,
       clientName: 'João Silva',
       clientPhone: '+5511999999999',
-      status: 'SCHEDULED' as AppointmentStatus,
+      status: 'SCHEDULED' as const,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
