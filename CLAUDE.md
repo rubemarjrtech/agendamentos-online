@@ -17,7 +17,7 @@ Antes de modificar ou criar novas funcionalidades, leia a documentação corresp
 - **Convenções de Banco de Dados:** Consulte `docs/schema-conventions.md` e `docs/migration-best-practices.md`.
 - **Design do Banco de Dados:** Consulte `docs/database-design.md`.
 - **Overview e Stack utilizada no Back End**: Consulte `docs/backend-stack.md`
-- **Padrões de Código e Estruturação de pastas Frontend com React:** Consulte `docs/frontend-rules.md`
+- **Padrões de Código e Estruturação de pastas Frontend com React:** Consulte `docs/rules/frontend-rules.md`
 
 ## Diretrizes Inquebráveis
 
@@ -32,4 +32,7 @@ Antes de modificar ou criar novas funcionalidades, leia a documentação corresp
 - Subir infra local: `pnpm docker:up`
 - Parar infra local: `pnpm docker:down`
 - Iniciar API: `pnpm start:dev`
-- Lint: `pnpm lint:check`
+- Formatação: `pnpm format` **Rodar ao final de sessões de tarefas de forma prioritária, antes de comandos de lint**
+- Verificar Lint: `pnpm lint:check` **Rodar ao final de sessões de tarefas, após o comando de formatação**
+- Aplicar Lint: `pnpm lint:fix` **Rodar ao final de sessões de tarefas, após o comando de formatação**
+- Rodar testes unitários: `pnpm test` **Rodar após escrever um ARQUIVO de testes unitários**

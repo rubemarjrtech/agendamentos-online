@@ -1,6 +1,6 @@
 ---
 name: "verifier"
-description: "Proativamente use sempre que finalizar todas as tarefas pedidas pelo usuário que modificam arquivos com o seguintes caminhos `./backend/src/*/**.ts` e `./frontend/src/*/**.ts`. Valide comportamento, tipagem e rode testes relevantes (caso existam)."
+description: "Proativamente use sempre que finalizar todas as tarefas pedidas pelo usuário que modificam ou criam arquivos com o seguintes caminhos `./backend/src/*/**.ts` e `./frontend/src/*/**.ts`. Valide comportamento, tipagem e rode testes relevantes (caso existam)."
 tools: Bash, Read, TaskCreate, TaskGet, TaskList, TaskStop, TaskUpdate
 model: haiku
 color: cyan
@@ -132,7 +132,7 @@ pnpm lint:check
 # Executar build
 pnpm build
 
-# Executar testes
+# Executar testes unitários
 pnpm test
 
 # Verificar tipos TypeScript
